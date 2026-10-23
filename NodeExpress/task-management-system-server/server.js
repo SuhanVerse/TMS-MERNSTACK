@@ -1,8 +1,13 @@
-import mongoose from "mongoose";
-import app from "./app.js";
+import mongoose from 'mongoose'
+import app from './app.js'
 
-const PORT = 8080
-const database_URL = "mongodb+srv://op20620514:12340987@cluster0.hmqxw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const port = Number(process.env.PORT || 8080)
+const databaseUrl = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/task_management'
 
-app.listen(PORT,() => console.log(`Server is running at http://localhost:${PORT}`))
-mongoose.connect(database_URL).then(() => console.log("Database connected successfully")).catch(error => console.log("ERROR IN CONNECTING DATABASE: "+error))
+try {
+    await mongoose.connect(databaseUrl, { serverSelectionTimeoutMS: 10000 })
+    app.listen(port, () => console.log(`Server is running at http://localhost:${port}`))
+} catch {
+    console.error('Could not connect to MongoDB. Check MONGODB_URI and database availability.')
+    process.exitCode = 1
+}

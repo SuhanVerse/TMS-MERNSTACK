@@ -4,7 +4,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node --env-file=.env server.js",
+    "dev": "node --env-file=.env --watch server.js",
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +18,8 @@
     "nodemon": "^3.1.9"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "",
+  "engines": {
+    "node": ">=20.19.0"
+  }
 }
